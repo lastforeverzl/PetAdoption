@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGrayLight"
+        android:layout_marginTop="?android:actionBarSize"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrayDark"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recent_search"
+                android:textSize="14sp"/>
+
+            <ImageButton
+                android:id="@+id/clear_recent_query"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                app:srcCompat="@drawable/ic_delete_black_24dp"/>
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_recent_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:clipToPadding="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:elevation="@dimen/app_bar_elevation"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:background="@color/colorGrayLight">
+
+        <ImageButton
+            android:id="@+id/id_searchback"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_weight="1.5"
+            app:srcCompat="@drawable/ic_arrow_back_black"
+            android:transitionName="@string/transition_search_back"/>
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
+
+        <ImageButton
+            android:id="@+id/id_filter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_weight="1.5"
+            app:srcCompat="@drawable/ic_filter_list_black_24px"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/rv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:actionBarSize"
+        android:background="@color/colorGrayLight"
+        tools:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_no_pets_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/no_adoptable_pets"
+            android:visibility="invisible"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pet_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay"
+            android:clipToPadding="false"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorBlack"
+            />
+
+    </FrameLayout>
+
+</FrameLayout>

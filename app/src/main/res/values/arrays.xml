@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_animals_type">
+        <item>@string/pref_animal_label_any</item>
+        <item>@string/pref_animal_label_dog</item>
+        <item>@string/pref_animal_label_cat</item>
+        <item>@string/pref_animal_label_bird</item>
+        <item>@string/pref_animal_label_horse</item>
+        <item>@string/pref_animal_label_reptile</item>
+        <item>@string/pref_animal_label_smallfurry</item>
+        <item>@string/pref_animal_label_barnyard</item>
+    </string-array>
+
+    <string-array name="pref_animals_value">
+        <item>@string/pref_animal_any</item>
+        <item>@string/pref_animal_dog</item>
+        <item>@string/pref_animal_cat</item>
+        <item>@string/pref_animal_bird</item>
+        <item>@string/pref_animal_horse</item>
+        <item>@string/pref_animal_reptile</item>
+        <item>@string/pref_animal_smallfurry</item>
+        <item>@string/pref_animal_barnyard</item>
+    </string-array>
+
+    <string-array name="pref_size_type">
+        <item>@string/pref_size_label_any</item>
+        <item>@string/pref_size_label_small</item>
+        <item>@string/pref_size_label_medium</item>
+        <item>@string/pref_size_label_large</item>
+        <item>@string/pref_size_label_extra_large</item>
+    </string-array>
+
+    <string-array name="pref_size_value">
+        <item>@string/pref_size_any</item>
+        <item>@string/pref_size_small</item>
+        <item>@string/pref_size_medium</item>
+        <item>@string/pref_size_large</item>
+        <item>@string/pref_size_extra_large</item>
+    </string-array>
+
+    <string-array name="pref_sex_type">
+        <item>@string/pref_sex_label_any</item>
+        <item>@string/pref_sex_label_male</item>
+        <item>@string/pref_sex_label_Female</item>
+    </string-array>
+
+    <string-array name="pref_sex_value">
+        <item>@string/pref_sex_any</item>
+        <item>@string/pref_sex_male</item>
+        <item>@string/pref_sex_female</item>
+    </string-array>
+
+    <string-array name="pref_age_type">
+        <item>@string/pref_age_label_any</item>
+        <item>@string/pref_age_label_baby</item>
+        <item>@string/pref_age_label_young</item>
+        <item>@string/pref_age_label_adult</item>
+        <item>@string/pref_age_label_senior</item>
+    </string-array>
+
+    <string-array name="pref_age_value">
+        <item>@string/pref_age_any</item>
+        <item>@string/pref_age_baby</item>
+        <item>@string/pref_age_young</item>
+        <item>@string/pref_age_adult</item>
+        <item>@string/pref_age_senior</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="77dp"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:id="@+id/shelter_call"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/im_shelter_call"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_local_phone_24dp"/>
+
+        <TextView
+            android:id="@+id/tv_shelter_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/colorGreen"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/shelter_call"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shelter_email"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/im_shelter_email"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_email_24px"/>
+
+        <TextView
+            android:id="@+id/tv_shelter_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/colorGreen"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/shelter_email"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shelter_direction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/im_shelter_direction"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_directions_24px"/>
+
+        <TextView
+            android:id="@+id/tv_shelter_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/colorGreen"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/shelter_head_direction"/>
+
+    </LinearLayout>
+
+</LinearLayout>

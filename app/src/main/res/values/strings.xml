@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">PetAdoption</string>
+    <string name="pet_description_text">"Meet Kipper! Kipper was rescued along with his litter mates, Hank and Perry, when they were brought to the shelter to be euthanized. Poor Kipper was suffering from demodex mange and secondary skin infection. Although demodex looks very bad it is not contagious and is relatively easy to treat. Luckily the shelter saw their potential and reached out to our rescue and we were able to find suitable fosters to take them in. Kipper has made an amazing recovery in just a few short weeks Leroys to his amazing foster home. Kipper is an adorable boy who loves to play with other dogs and cuddling with his people. "</string>
+    <string name="shelter_direction">GET DIRECTIONS</string>
+    <string name="shelter_call">CALL</string>
+    <string name="shelter_email">EMAIL</string>
+    <string name="shelter_head_direction">DIRECTION</string>
+    <string name="search">Search</string>
+    <string name="transition_search_back">transition_search_back</string>
+    <string name="recent_search">Recent Search</string>
+    <string name="no_adoptable_pets">No adoptable pets found</string>
+    <string name="no_favorite_pets">No favorite pets found</string>
+    <string name="auto_complete_hint">Search for address</string>
+    <string name="content_authority" translatable="false">com.android.popularmovies.popularmovies</string>
+
+    <!-- - - - - - - - - - - - - - - -
+      - Used by SearchFilterPreferences  -
+      - - - - - - - - - - - - - - - -->
+    <string name="pref_animals_label">Animals</string>
+    <string name="pref_animals_key" translatable="false">animals</string>
+    <string name="pref_animal_label_any">Any</string>
+    <string name="pref_animal_label_dog">Dog</string>
+    <string name="pref_animal_label_cat">Cat</string>
+    <string name="pref_animal_label_bird">Bird</string>
+    <string name="pref_animal_label_horse">Horse</string>
+    <string name="pref_animal_label_reptile">Reptile</string>
+    <string name="pref_animal_label_smallfurry">Small furry</string>
+    <string name="pref_animal_label_barnyard">Barnyard</string>
+    <string name="pref_animal_any" translatable="false">any</string>
+    <string name="pref_animal_dog" translatable="false">dog</string>
+    <string name="pref_animal_cat" translatable="false">cat</string>
+    <string name="pref_animal_bird" translatable="false">bird</string>
+    <string name="pref_animal_horse" translatable="false">horse</string>
+    <string name="pref_animal_reptile" translatable="false">reptile</string>
+    <string name="pref_animal_smallfurry" translatable="false">smallfurry</string>
+    <string name="pref_animal_barnyard" translatable="false">barnyard</string>
+    
+    <string name="pref_size_label">Size</string>
+    <string name="pref_size_key" translatable="false">size</string>
+    <string name="pref_size_label_any">Any</string>
+    <string name="pref_size_label_small">Small</string>
+    <string name="pref_size_label_medium">Medium</string>
+    <string name="pref_size_label_large">Large</string>
+    <string name="pref_size_label_extra_large">Extra large</string>
+    <string name="pref_size_any" translatable="false">any</string>
+    <string name="pref_size_small" translatable="false">S</string>
+    <string name="pref_size_medium" translatable="false">M</string>
+    <string name="pref_size_large" translatable="false">L</string>
+    <string name="pref_size_extra_large" translatable="false">XL</string>
+
+    <string name="pref_sex_label">Sex</string>
+    <string name="pref_sex_key" translatable="false">sex</string>
+    <string name="pref_sex_label_any">Any</string>
+    <string name="pref_sex_label_male">Male</string>
+    <string name="pref_sex_label_Female">Female</string>
+    <string name="pref_sex_any" translatable="false">any</string>
+    <string name="pref_sex_male" translatable="false">M</string>
+    <string name="pref_sex_female" translatable="false">F</string>
+
+    <string name="pref_age_label">Age</string>
+    <string name="pref_age_key" translatable="false">age</string>
+    <string name="pref_age_label_any">Any</string>
+    <string name="pref_age_label_baby">Baby</string>
+    <string name="pref_age_label_young">Young</string>
+    <string name="pref_age_label_adult">Adult</string>
+    <string name="pref_age_label_senior">Senior</string>
+    <string name="pref_age_any" translatable="false">any</string>
+    <string name="pref_age_baby" translatable="false">Baby</string>
+    <string name="pref_age_young" translatable="false">Young</string>
+    <string name="pref_age_adult" translatable="false">Adult</string>
+    <string name="pref_age_senior" translatable="false">Senior</string>
+
+
+
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+    <ListPreference
+        android:defaultValue="@string/pref_animal_any"
+        android:entries="@array/pref_animals_type"
+        android:entryValues="@array/pref_animals_value"
+        android:key="@string/pref_animals_key"
+        android:title="@string/pref_animals_label" />
+
+    <ListPreference
+        android:defaultValue="@string/pref_size_any"
+        android:entries="@array/pref_size_type"
+        android:entryValues="@array/pref_size_value"
+        android:key="@string/pref_size_key"
+        android:title="@string/pref_size_label" />
+
+    <ListPreference
+        android:defaultValue="@string/pref_sex_any"
+        android:entries="@array/pref_sex_type"
+        android:entryValues="@array/pref_sex_value"
+        android:key="@string/pref_sex_key"
+        android:title="@string/pref_sex_label" />
+
+    <ListPreference
+        android:defaultValue="@string/pref_age_any"
+        android:entries="@array/pref_age_type"
+        android:entryValues="@array/pref_age_value"
+        android:key="@string/pref_age_key"
+        android:title="@string/pref_age_label" />
+
+</PreferenceScreen>
