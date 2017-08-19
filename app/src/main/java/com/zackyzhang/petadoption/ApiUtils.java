@@ -104,7 +104,7 @@ public class ApiUtils {
         return urlStr;
     }
 
-    public static String getBreedsString(PetBean pet) {
+    public static String getBreedsWithSemiColon(PetBean pet) {
         String breed = "";
         if (pet.getBreeds() != null) {
             for (PetBean.BreedsBean.BreedBean item : pet.getBreeds()) {
@@ -118,11 +118,10 @@ public class ApiUtils {
         String state = contact.getState();
         String city = contact.getCity();
         return String.format("%s, %s", city, state);
-
     }
 
     public static String getPetInfo(PetBean pet) {
-        String formatString = "%s %s %s %s";
+        String formatString = "%s - %s - %s - %s";
         String size = "";
         if (Constants.petSizeMap.containsKey(pet.getSize()))
             size = Constants.petSizeMap.get(pet.getSize());
@@ -132,11 +131,16 @@ public class ApiUtils {
             sex = "male";
         else
             sex = "female";
+        String breed = getBreedString(pet);
+        return String.format(formatString, size, age, sex, breed);
+    }
+
+    public static String getBreedString(PetBean pet) {
         String breed = "";
         for (PetBean.BreedsBean.BreedBean item : pet.getBreeds()) {
-            breed = item.getValue() + " ";
+            breed += item.getValue() + " & ";
         }
-        return String.format(formatString, size, age, sex, breed);
+        return breed.substring(0, breed.length() - 3);
     }
 
     public static String getAdoptionStatus(PetBean pet) {
@@ -189,7 +193,7 @@ public class ApiUtils {
         if (shelter.getCountry() != null)
             country = shelter.getCountry();
         Timber.tag(TAG).d(shelter.getName() + ": " + address1 + " " + address2 + " " + city + " " + state + " " + zipCode + " " + country);
-        return (address1 + " " + address2 + " " + city + " " + state + " " + zipCode + " " + country).trim();
+        return (address1 + " " + address2 + ", " + city + ", " + state + " " + zipCode + " " + country).trim();
 
     }
 

@@ -28,26 +28,30 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.PetDetailActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.GalleryActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.SearchActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.ShelterPetsActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.SearchFilterActivity">
-
-        </activity>
-
+        <activity android:name=".ui.activity.PetDetailActivity" />
+        <activity android:name=".ui.activity.GalleryActivity" />
+        <activity android:name=".ui.activity.SearchActivity"/>
+        <activity android:name=".ui.activity.ShelterPetsActivity"/>
+        <activity android:name=".ui.activity.SearchFilterActivity" />
+        <service android:name=".FavoritePetService" />
         <provider
             android:authorities="com.zackyzhang.petadoption"
             android:name=".data.FavoriteProvider"
-            android:exported="false"/>
+            android:exported="true"/>
+
+        <receiver android:name=".widget.FavoritePetWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_pet_widget_info"/>
+        </receiver>
+
+        <service android:name=".widget.ListWidgetService"
+                 android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

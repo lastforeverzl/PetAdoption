@@ -1,6 +1,6 @@
 package com.zackyzhang.petadoption.ui.presenter;
 
-import com.zackyzhang.petadoption.PetAdoptionPreferences;
+import com.zackyzhang.petadoption.data.PetAdoptionPreferences;
 import com.zackyzhang.petadoption.ui.base.PresenterFactory;
 
 /**

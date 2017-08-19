@@ -1,4 +1,4 @@
-package com.zackyzhang.petadoption;
+package com.zackyzhang.petadoption.data;
 
 /**
  * Created by lei on 8/15/17.

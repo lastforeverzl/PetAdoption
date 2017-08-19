@@ -1,8 +1,8 @@
 package com.zackyzhang.petadoption.ui.presenter;
 
 import com.zackyzhang.petadoption.ApiUtils;
-import com.zackyzhang.petadoption.PetAdoptionPreferences;
-import com.zackyzhang.petadoption.RecentQuery;
+import com.zackyzhang.petadoption.data.PetAdoptionPreferences;
+import com.zackyzhang.petadoption.data.RecentQuery;
 import com.zackyzhang.petadoption.api.DataManager;
 import com.zackyzhang.petadoption.api.model.PetBean;
 import com.zackyzhang.petadoption.api.model.PetFindResponse;

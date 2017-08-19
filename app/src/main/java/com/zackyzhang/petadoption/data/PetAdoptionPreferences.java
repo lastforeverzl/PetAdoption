@@ -1,4 +1,4 @@
-package com.zackyzhang.petadoption;
+package com.zackyzhang.petadoption.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,6 +6,7 @@ import android.support.v7.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.zackyzhang.petadoption.R;
 
 import java.lang.reflect.Type;
 import java.util.LinkedList;

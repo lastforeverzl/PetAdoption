@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.zackyzhang.petadoption.Constants;
 import com.zackyzhang.petadoption.R;
-import com.zackyzhang.petadoption.RecentQuery;
+import com.zackyzhang.petadoption.data.RecentQuery;
 import com.zackyzhang.petadoption.ui.activity.SearchActivity;
 
 import java.util.ArrayList;

@@ -40,7 +40,7 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
         implements PetDetailContract.View, BaseSliderView.OnSliderClickListener {
     private static final String TAG = "PetDetailActivity";
 
-    private static final String EXTRA_PET_DETAIL = "com.zackyzhang.petadoption.ui.activity.petdetail";
+    public static final String EXTRA_PET_DETAIL = "com.zackyzhang.petadoption.ui.activity.petdetail";
     private PetDetailPresenter presenter;
     private PetBean mPet;
     private ShelterBean mShelter;

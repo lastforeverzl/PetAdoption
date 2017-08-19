@@ -1,6 +1,6 @@
 package com.zackyzhang.petadoption.ui.base;
 
-import com.zackyzhang.petadoption.RecentQuery;
+import com.zackyzhang.petadoption.data.RecentQuery;
 import com.zackyzhang.petadoption.api.model.PetBean;
 
 import java.util.List;
