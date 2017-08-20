@@ -57,8 +57,18 @@ public class ApiUtils {
                         JSONArray jsonArray = new JSONArray();
                         pet.getJSONObject("breeds").put("breed", jsonArray.put(breed));
                     } else if (breed instanceof JSONArray) {
-
+                        // no-op
                     }
+                }
+            } else if (petFinder.has("pet")) {
+                JSONObject pet = petFinder.getJSONObject("pet");
+                JSONObject breeds = pet.getJSONObject("breeds");
+                Object breed = breeds.get("breed");
+                if (breed instanceof JSONObject) {
+                    JSONArray jsonArray = new JSONArray();
+                    pet.getJSONObject("breeds").put("breed", jsonArray.put(breed));
+                } else if (breed instanceof JSONArray) {
+                    // no-op
                 }
             }
         } catch (JSONException e) {

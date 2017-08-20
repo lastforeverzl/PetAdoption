@@ -38,6 +38,7 @@ import com.zackyzhang.petadoption.ui.fragment.SheltersFragment;
 import com.zackyzhang.petadoption.ui.fragment.ViewPagerFragment;
 import com.zackyzhang.petadoption.ui.presenter.MainPresenter;
 import com.zackyzhang.petadoption.ui.presenter.MainPresenterFactory;
+import com.zackyzhang.petadoption.widget.WidgetUpdateJobDispatcher;
 
 import java.io.IOException;
 import java.util.List;
@@ -79,6 +80,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
 
         mFragmentManager = getSupportFragmentManager();
         setupBottomBar();
+
+        WidgetUpdateJobDispatcher.scheduleFirebaseJobDispatcher(this);
     }
 
     @Override
@@ -112,6 +115,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
                             getString(R.string.transition_search_back)).toBundle();
                     startActivity(intent, options);
                 } else  startActivity(intent);
+                break;
+            case R.id.menu_testJob:
+                Timber.tag("FirebaseJob").d("menu_testJob click");
+//                FavoritePetService.startActionUpdatePetStatus(this);
         }
         return super.onOptionsItemSelected(item);
     }

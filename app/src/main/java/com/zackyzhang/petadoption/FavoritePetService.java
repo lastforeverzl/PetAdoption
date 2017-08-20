@@ -6,12 +6,18 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 
+import com.zackyzhang.petadoption.api.DataManager;
 import com.zackyzhang.petadoption.api.model.PetBean;
+import com.zackyzhang.petadoption.api.model.PetGetResponse;
 import com.zackyzhang.petadoption.data.FavoriteDataContract;
 import com.zackyzhang.petadoption.widget.FavoritePetWidgetProvider;
+
+import timber.log.Timber;
 
 /**
  * Created by lei on 8/17/17.
@@ -117,6 +123,51 @@ public class FavoritePetService extends IntentService {
     }
 
     private void handleActionUpdatePetStatus() {
-
+        int petId;
+        String petStatus;
+        String petLastUpdate;
+        DataManager dataManager = new DataManager<PetGetResponse>() {
+            @Override
+            public void onDataLoaded(PetGetResponse data) {}
+        };
+        Uri petsQueryUri = FavoriteDataContract.FavoriteEntry.CONTENT_URI;
+        Cursor cursor = getContentResolver().query(
+                petsQueryUri,
+                Constants.PETS_QUERY_PROJECTION,
+                null,
+                null,
+                null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            petId = cursor.getInt(Constants.INDEX_PET_ID);
+            petStatus = cursor.getString(Constants.INDEX_PET_STATUS);
+            petLastUpdate = cursor.getString(Constants.INDEX_PET_DATE);
+            Timber.tag("FirebaseJob").d("DB: " + petId + ", " + petStatus + ", " + petLastUpdate);
+            PetGetResponse response = dataManager.getSinglePet(String.valueOf(petId));
+            if (response != null) {
+                Timber.tag("FirebaseJob").d("HTTP: " + response.getPetGet().getPet().getStatus()
+                                + ", " + response.getPetGet().getPet().getLastUpdate());
+                String newStatus = response.getPetGet().getPet().getStatus();
+                String newLastUpdate = response.getPetGet().getPet().getLastUpdate();
+                if (!petStatus.equals(newStatus) || !petLastUpdate.equals(newLastUpdate)) {
+                    Uri uri = FavoriteDataContract.FavoriteEntry.buildPetUri(Long.valueOf(petId));
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(FavoriteDataContract.FavoriteEntry.COLUMN_PET_STATUS, newStatus);
+                    contentValues.put(FavoriteDataContract.FavoriteEntry.COLUMN_PET_DATE, newLastUpdate);
+                    getContentResolver().update(uri, contentValues, null, null);
+                } else {
+                    Uri uri = FavoriteDataContract.FavoriteEntry.buildPetUri(Long.valueOf(petId));
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(FavoriteDataContract.FavoriteEntry.COLUMN_PET_STATUS, "P");
+                    contentValues.put(FavoriteDataContract.FavoriteEntry.COLUMN_PET_DATE, "2077-07-17T21:07:26Z");
+                    getContentResolver().update(uri, contentValues, null, null);
+                    Timber.tag("FirebaseJob").d("status or update is not change");
+                }
+            }
+            cursor.moveToNext();
+        }
+        startActionFavoritePetWidgets(this);
+        Intent updateFinishedIntent = new Intent(WidgetUpdateJobService.ACTION_UPDATE_FINISHED);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(updateFinishedIntent);
     }
 }

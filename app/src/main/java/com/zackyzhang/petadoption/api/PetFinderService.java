@@ -1,6 +1,7 @@
 package com.zackyzhang.petadoption.api;
 
 import com.zackyzhang.petadoption.api.model.PetFindResponse;
+import com.zackyzhang.petadoption.api.model.PetGetResponse;
 import com.zackyzhang.petadoption.api.model.ShelterFindResponse;
 import com.zackyzhang.petadoption.api.model.ShelterGetResponse;
 
@@ -37,4 +38,8 @@ public interface PetFinderService {
     Call<PetFindResponse> getShelterPets(@Query("key") String key,
                                          @Query("id") String id,
                                          @QueryMap Map<String, String> options);
+
+    @GET("pet.get?format=json")
+    Call<PetGetResponse> getPetById(@Query("key") String key,
+                                    @Query("id") String id);
 }

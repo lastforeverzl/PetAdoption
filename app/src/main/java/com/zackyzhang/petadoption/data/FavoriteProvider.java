@@ -11,6 +11,9 @@ import android.support.annotation.Nullable;
 
 import com.zackyzhang.petadoption.data.FavoriteDataContract.FavoriteEntry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import timber.log.Timber;
 
 /**
@@ -122,7 +125,36 @@ public class FavoriteProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+        final SQLiteDatabase db = mFavoriteDBHelper.getWritableDatabase();
+        int petsUpdated;
+        switch (sUriMatcher.match(uri)) {
+            case CODE_FAVORITE:
+                petsUpdated = db.update(FavoriteEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case CODE_FAVORITE_WITH_ID:
+                if (selection == null) {
+                    selection = FavoriteEntry.COLUMN_PET_ID + "=?";
+                } else {
+                    selection += " AND " + FavoriteEntry.COLUMN_PET_ID + "=?";
+                }
+                String id = uri.getLastPathSegment();
+                if (selectionArgs == null) {
+                    selectionArgs = new String[]{id};
+                } else {
+                    ArrayList<String> selectionArgsList = new ArrayList<String>();
+                    selectionArgsList.addAll(Arrays.asList(selectionArgs));
+                    selectionArgsList.add(id);
+                    selectionArgs = selectionArgsList.toArray(new String[selectionArgsList.size()]);
+                }
+                petsUpdated = db.update(FavoriteEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        if (petsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return petsUpdated;
     }
 }

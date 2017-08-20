@@ -3,9 +3,11 @@ package com.zackyzhang.petadoption.api;
 import com.zackyzhang.petadoption.BuildConfig;
 import com.zackyzhang.petadoption.api.model.BaseResponse;
 import com.zackyzhang.petadoption.api.model.PetFindResponse;
+import com.zackyzhang.petadoption.api.model.PetGetResponse;
 import com.zackyzhang.petadoption.api.model.ShelterFindResponse;
 import com.zackyzhang.petadoption.api.model.ShelterGetResponse;
 
+import java.io.IOException;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -95,5 +97,15 @@ public abstract class DataManager<T extends BaseResponse> {
                 onDataLoaded(null);
             }
         });
+    }
+
+    public PetGetResponse getSinglePet(String id) {
+        Call<PetGetResponse> singlePet = mPetFinderApi.getApi().getPetById(BuildConfig.PETFINDER_API_KEY, id);
+        try {
+            return singlePet.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
