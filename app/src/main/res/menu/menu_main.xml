@@ -7,9 +7,4 @@
         android:icon="@drawable/ic_search_24dp"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/menu_testJob"
-        android:title="@string/search"
-        android:icon="@drawable/ic_nearby"
-        app:showAsAction="always" />
 </menu>

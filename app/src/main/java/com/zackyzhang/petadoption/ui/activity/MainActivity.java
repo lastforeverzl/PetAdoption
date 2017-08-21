@@ -1,75 +1,54 @@
 package com.zackyzhang.petadoption.ui.activity;
 
-import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationAvailability;
-import com.google.android.gms.location.LocationServices;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.zackyzhang.petadoption.MyApplication;
 import com.zackyzhang.petadoption.R;
+import com.zackyzhang.petadoption.api.GoogleApiHelper;
+import com.zackyzhang.petadoption.api.LocationCallback;
 import com.zackyzhang.petadoption.api.model.PetBean;
 import com.zackyzhang.petadoption.ui.PetOnClickHandler;
-import com.zackyzhang.petadoption.ui.base.BasePresenterActivity;
-import com.zackyzhang.petadoption.ui.base.MainActivityContract;
-import com.zackyzhang.petadoption.ui.base.PresenterFactory;
 import com.zackyzhang.petadoption.ui.fragment.FavoriteFragment;
 import com.zackyzhang.petadoption.ui.fragment.SheltersFragment;
 import com.zackyzhang.petadoption.ui.fragment.ViewPagerFragment;
-import com.zackyzhang.petadoption.ui.presenter.MainPresenter;
-import com.zackyzhang.petadoption.ui.presenter.MainPresenterFactory;
 import com.zackyzhang.petadoption.widget.WidgetUpdateJobDispatcher;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends BasePresenterActivity<MainPresenter, MainActivityContract.View>
-        implements MainActivityContract.View, PetOnClickHandler, SheltersFragment.ShelterOnClickHandler {
+public class MainActivity extends AppCompatActivity
+        implements LocationCallback, PetOnClickHandler, SheltersFragment.ShelterOnClickHandler {
     private static final String TAG = "MainActivity";
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private final String VIEWPAGER_FRAGMENT_TAG = "ViewPagerFragmentTAG";
     private final String SHELTER_FRAGMENT_TAG = "ShelterFragmentTAG";
     private final String FAVORITE_FRAGMENT_TAG = "FavoriteFragmentTAG";
-//    private static final int LOADER_ID = 101;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.bottomNavigationBar)
     BottomBar mBottomBar;
 
-//    private MainActivityContract.Presenter presenter;
     private FragmentManager mFragmentManager;
     private ViewPagerFragment viewPagerFragment;
     private SheltersFragment mSheltersFragment;
     private FavoriteFragment mFavoriteFragment;
-    private Location mLastLocation;
-    private String currentZipCode;
+    private GoogleApiHelper mGoogleApiHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +58,8 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
         setSupportActionBar(mToolbar);
 
         mFragmentManager = getSupportFragmentManager();
-        setupBottomBar();
-
+        mGoogleApiHelper = MyApplication.getGoogleApiHelper();
+        mGoogleApiHelper.setLocationCallback(this);
         WidgetUpdateJobDispatcher.scheduleFirebaseJobDispatcher(this);
     }
 
@@ -88,8 +67,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
     protected void onStart() {
         super.onStart();
         MyApplication.getGoogleApiHelper().connect();
-//        setupBottomBar();
-        onTabItemSelected(mBottomBar.getCurrentTabId());
     }
 
     @Override
@@ -114,85 +91,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
                     Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenuView,
                             getString(R.string.transition_search_back)).toBundle();
                     startActivity(intent, options);
-                } else  startActivity(intent);
+                } else startActivity(intent);
                 break;
-            case R.id.menu_testJob:
-                Timber.tag("FirebaseJob").d("menu_testJob click");
-//                FavoritePetService.startActionUpdatePetStatus(this);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @NonNull
-    @Override
-    protected String tag() {
-        return "MainActivity";
-    }
-
-    @NonNull
-    @Override
-    protected PresenterFactory<MainPresenter> getPresenterFactory() {
-        return new MainPresenterFactory();
-    }
-
-    @Override
-    protected void onPresenterCreatedOrRestored(@NonNull MainPresenter presenter) {
-
-    }
-
-    @Override
-    public void loadZipCode(String zipCode) {
-        Timber.tag(TAG).d("zipCode: " + zipCode);
-        currentZipCode = zipCode;
-        onTabItemSelected(mBottomBar.getCurrentTabId());
-    }
-
-    @Override
-    public double[] getCurrentLocation(GoogleApiClient googleApiClient) {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-            return null;
-        }
-        LocationAvailability locationAvailability =
-                LocationServices.FusedLocationApi.getLocationAvailability(googleApiClient);
-        double[] currentLatLng = new double[2];
-        if (locationAvailability != null && locationAvailability.isLocationAvailable()) {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            if (mLastLocation != null) {
-                currentLatLng[0] = mLastLocation.getLatitude();
-                currentLatLng[1] = mLastLocation.getLongitude();
-            }
-        }
-        return currentLatLng;
-    }
-
-    @Override
-    public String getZipCode(double[] latLng) {
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(latLng[0], latLng[1], 1);
-            return addresses.get(0).getPostalCode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "LOCATION_PERMISSION Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "LOCATION_PERMISSION Denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 
     private void setupBottomBar() {
@@ -217,12 +119,10 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
     private void onTabItemSelected(int id) {
         switch (id) {
             case R.id.tab_nearby:
-                if (currentZipCode == null)
-                    return;
                 viewPagerFragment = (ViewPagerFragment)
                         mFragmentManager.findFragmentByTag(VIEWPAGER_FRAGMENT_TAG);
                 if (viewPagerFragment == null) {
-                    viewPagerFragment = ViewPagerFragment.newInstance(currentZipCode);
+                    viewPagerFragment = ViewPagerFragment.newInstance();
                 }
                 mFragmentManager.beginTransaction()
                         .addToBackStack(VIEWPAGER_FRAGMENT_TAG)
@@ -244,7 +144,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
                 mSheltersFragment = (SheltersFragment)
                         mFragmentManager.findFragmentByTag(SHELTER_FRAGMENT_TAG);
                 if (mSheltersFragment == null) {
-                    mSheltersFragment = SheltersFragment.newInstance(currentZipCode);
+                    mSheltersFragment = SheltersFragment.newInstance();
                 }
                 mFragmentManager.beginTransaction()
                         .addToBackStack(SHELTER_FRAGMENT_TAG)
@@ -283,5 +183,11 @@ public class MainActivity extends BasePresenterActivity<MainPresenter, MainActiv
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
+    }
+
+    @Override
+    public void onLocationApiConnected() {
+        Timber.tag(TAG).d("onLocationApiConnected");
+        setupBottomBar();
     }
 }

@@ -232,7 +232,7 @@ public class ApiUtils {
         if (!sex.equals("any")) {
             options.put("sex", sex);
         }
-        if (!age.equals("age")) {
+        if (!age.equals("any")) {
             options.put("age", age);
         }
         return options;

@@ -45,7 +45,11 @@ public class FavoritePresenter implements FavoriteContract.Presenter, LoaderMana
         this.count++;
         Timber.tag(TAG).d("View attached " + count + " times.");
         mContext = mView.getActivityContext();
-        mContext.getLoaderManager().initLoader(ID_PETS_LOADER, null, this);
+        if (mPetList.isEmpty()) {
+            mContext.getLoaderManager().initLoader(ID_PETS_LOADER, null, this);
+        } else {
+            mView.loadData(mPetList);
+        }
     }
 
     @Override
@@ -80,23 +84,6 @@ public class FavoritePresenter implements FavoriteContract.Presenter, LoaderMana
         mPetList.clear();
         data.moveToFirst();
         while (!data.isAfterLast()) {
-//            Timber.tag(TAG).d("info: " + data.getString(Constants.INDEX_PET_INFO));
-//            Timber.tag(TAG).d("photo: " + data.getString(Constants.INDEX_PET_PHOTO));
-//            Timber.tag(TAG).d("breeds: " + data.getString(Constants.INDEX_PET_BREEDS));
-//            Timber.tag(TAG).d("media: " + data.getString(Constants.INDEX_PET_MEDIA));
-//
-//            Timber.tag(TAG).d("id: " + data.getInt(Constants.INDEX_PET_ID));
-//            Timber.tag(TAG).d("name: " + data.getString(Constants.INDEX_PET_NAME));
-//            Timber.tag(TAG).d("date: " + data.getString(Constants.INDEX_PET_DATE));
-//            Timber.tag(TAG).d("status: " + data.getString(Constants.INDEX_PET_STATUS));
-//            Timber.tag(TAG).d("age: " + data.getString(Constants.INDEX_PET_AGE));
-//            Timber.tag(TAG).d("size: " + data.getString(Constants.INDEX_PET_SIZE));
-////            Timber.tag(TAG).d("shelter_pet_id: " + data.getString(Constants.INDEX_PET_SHELTER_PET_ID));
-//            Timber.tag(TAG).d("sex: " + data.getString(Constants.INDEX_PET_SEX));
-//            Timber.tag(TAG).d("description: " + data.getString(Constants.INDEX_PET_DESCRIPTION));
-//            Timber.tag(TAG).d("mix: " + data.getString(Constants.INDEX_PET_MIX));
-//            Timber.tag(TAG).d("shelter_id: " + data.getString(Constants.INDEX_PET_SHELTER_ID));
-//            Timber.tag(TAG).d("animal: " + data.getString(Constants.INDEX_PET_ANIMAL));
 
             PetBean pet = new PetBean();
             pet.setId(new PetBean.IdBean(String.valueOf(data.getInt(Constants.INDEX_PET_ID))));

@@ -40,7 +40,6 @@ public class TabFragment extends BasePresenterFragment<TabPresenter, TabContract
     private String mZipCode;
     private TabPresenter presenter;
     private List<PetBean> mPetList;
-//    private TabAdapter mAdapter;
     private PetListAdapter mAdapter;
     private EndlessRecyclerViewScrollListener scrollListener;
     private RecyclerView mRecyclerView;
@@ -65,7 +64,6 @@ public class TabFragment extends BasePresenterFragment<TabPresenter, TabContract
         }
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +83,6 @@ public class TabFragment extends BasePresenterFragment<TabPresenter, TabContract
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-//        mAdapter = new TabAdapter(getActivity());
         mAdapter = new PetListAdapter(getActivity(), false);
         mAdapter.setOnPetClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
@@ -138,69 +135,5 @@ public class TabFragment extends BasePresenterFragment<TabPresenter, TabContract
     public void onItemClick(PetBean pet) {
         mClickHandler.onItemClick(pet);
     }
-//
-//    class TabAdapter extends RecyclerView.Adapter<TabAdapter.Holder> {
-//        private Context mContext;
-//        private LayoutInflater mLayoutInflater;
-//        private List<PetBean> mList;
-//
-//        public TabAdapter(Context context) {
-//            mContext = context;
-//            this.mLayoutInflater = LayoutInflater.from(context);
-//        }
-//
-//        @Override
-//        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            View view = mLayoutInflater.inflate(R.layout.pet_item_list, parent, false);
-//            return new Holder(view);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(Holder holder, int position) {
-//            PetBean pet = mList.get(position);
-//            String name = pet.getName();
-//            String info = ApiUtils.getPetInfo(pet);
-//            String location = ApiUtils.getPetLocation(pet.getContact());
-//            holder.mName.setText(name);
-//            holder.mInformation.setText(info);
-//            holder.mLocation.setText(location);
-//            String url = ApiUtils.getFirstPhotoUrl(pet);
-//            Picasso.with(mContext).load(url).fit().centerCrop().into(holder.mImageView);
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return mList == null ? 0 : mList.size();
-//        }
-//
-//        public void setData(List<PetBean> data) {
-//            mList = data;
-//            Timber.tag(TAG).d("adapter mList size: " + mList.size());
-//            notifyDataSetChanged();
-//        }
-//
-//        class Holder extends RecyclerView.ViewHolder {
-//
-//            @BindView(R.id.animal_photo)
-//            ImageView mImageView;
-//            @BindView(R.id.animal_name)
-//            TextView mName;
-//            @BindView(R.id.animal_location)
-//            TextView mLocation;
-//            @BindView(R.id.animal_info)
-//            TextView mInformation;
-//
-//            public Holder(View itemView) {
-//                super(itemView);
-//                ButterKnife.bind(this, itemView);
-//            }
-//
-//            @OnClick(R.id.card_view)
-//            public void onClick() {
-//                int adapterPosition = getAdapterPosition();
-//                PetBean pet = mList.get(adapterPosition);
-//                mClickHandler.onItemClick(pet);
-//            }
-//        }
-//    }
+
 }

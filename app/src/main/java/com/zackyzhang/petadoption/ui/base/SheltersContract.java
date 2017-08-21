@@ -11,10 +11,14 @@ import java.util.List;
 public interface SheltersContract {
     interface View extends MvpContract.MvpView {
         void loadData(List<ShelterBean> shelters);
+
+        void checkPermission();
     }
 
     interface Presenter extends MvpContract.MvpPresenter<View> {
         void fetchMoreData();
+
+        void setZipCode(String zipCode);
     }
 
 }

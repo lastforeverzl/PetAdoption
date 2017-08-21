@@ -27,7 +27,7 @@ public class SheltersPresenter implements SheltersContract.Presenter {
     private List<ShelterBean> sheltersData = new ArrayList<>();
 
     public SheltersPresenter(String zipCode) {
-        this.mZipCode = zipCode;
+//        this.mZipCode = zipCode;
     }
 
     @Override
@@ -35,7 +35,12 @@ public class SheltersPresenter implements SheltersContract.Presenter {
         this.mView = view;
         this.count++;
         Timber.tag(TAG).d("View attached " + count + " times.");
-        fetchData();
+//        fetchData();
+        if (mZipCode == null && sheltersData.isEmpty()) {
+            mView.checkPermission();
+        } else {
+            mView.loadData(sheltersData);
+        }
     }
 
     @Override
@@ -46,6 +51,12 @@ public class SheltersPresenter implements SheltersContract.Presenter {
     @Override
     public void onDestroyed() {
 
+    }
+
+    @Override
+    public void setZipCode(String zipCode) {
+        this.mZipCode = zipCode;
+        fetchData();
     }
 
     private void fetchData() {
