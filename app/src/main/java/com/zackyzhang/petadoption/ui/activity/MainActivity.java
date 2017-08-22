@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -108,9 +109,14 @@ public class MainActivity extends AppCompatActivity
         mBottomBar.setOnTabReselectListener(new OnTabReselectListener() {
             @Override
             public void onTabReSelected(@IdRes int tabId) {
-                if (tabId == R.id.tab_nearby) {
-                    // The tab with id R.id.tab_favorites was reselected,
-                    // change your content accordingly.
+                if (tabId == R.id.tab_shelters || tabId == R.id.tab_favorites) {
+                    Fragment fragment = mFragmentManager.findFragmentById(R.id.contentContainer);
+                    if (fragment instanceof SheltersFragment) {
+                        ((SheltersFragment) fragment).scrollToTopCallback();
+                    }
+                    if (fragment instanceof FavoriteFragment) {
+                        ((FavoriteFragment) fragment).scrollToTopCallback();
+                    }
                 }
             }
         });

@@ -81,12 +81,10 @@ public class GoogleApiHelper implements GoogleApiClient.ConnectionCallbacks, Goo
 
     @Override
     public void onConnectionSuspended(int i) {
-        // TODO: 8/5/17
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        // TODO: 8/5/17 handle connection failed
     }
 
 }

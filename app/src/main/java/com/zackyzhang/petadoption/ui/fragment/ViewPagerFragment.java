@@ -77,7 +77,8 @@ public class ViewPagerFragment extends Fragment {
         Timber.tag(TAG).d("ViewPagerFragment destroy");
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
         Timber.tag(TAG).d("ViewPagerFragment onDestroyView");
         mUnbinder.unbind();
@@ -177,11 +178,11 @@ public class ViewPagerFragment extends Fragment {
 
     public class PagerAdapter extends FragmentPagerAdapter {
 
-        Context ctxt=null;
+        Context ctxt = null;
 
         public PagerAdapter(Context ctxt, FragmentManager mgr) {
             super(mgr);
-            this.ctxt=ctxt;
+            this.ctxt = ctxt;
         }
 
         @Override

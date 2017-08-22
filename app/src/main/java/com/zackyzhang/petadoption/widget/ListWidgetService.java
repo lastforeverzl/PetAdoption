@@ -90,7 +90,6 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         pet.setStatus(new PetBean.StatusBean(mCursor.getString(Constants.INDEX_PET_STATUS)));
         pet.setAge(new PetBean.AgeBean(mCursor.getString(Constants.INDEX_PET_AGE)));
         pet.setSize(new PetBean.SizeBean(mCursor.getString(Constants.INDEX_PET_SIZE)));
-//            pet.setShelterPetId(new PetBean.ShelterPetIdBean(data.getString(Constants.INDEX_PET_SHELTER_PET_ID)));
         pet.setSex(new PetBean.SexBean(mCursor.getString(Constants.INDEX_PET_SEX)));
         pet.setDescription(new PetBean.DescriptionBean(mCursor.getString(Constants.INDEX_PET_DESCRIPTION)));
         pet.setMix(new PetBean.MixBean(mCursor.getString(Constants.INDEX_PET_MIX)));
@@ -120,11 +119,9 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
             e.printStackTrace();
         }
 
-        // TODO: 8/18/17 display location info in widget
         views.setTextViewText(R.id.tv_pet_name, pet.getName());
         views.setTextViewText(R.id.tv_info, ApiUtils.getBreedString(pet));
         views.setTextViewText(R.id.tv_status, ApiUtils.getAdoptionStatus(pet));
-        views.setTextViewText(R.id.tv_location, "Dublin");
         views.setTextViewText(R.id.tv_updated_date, ApiUtils.getLastUpdate(pet));
 
         Bundle extras = new Bundle();

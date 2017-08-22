@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 /**
  * Created by lei on 8/16/17.
@@ -34,6 +36,7 @@ import butterknife.Unbinder;
 
 public class FavoriteFragment extends BasePresenterFragment<FavoritePresenter, FavoriteContract.View>
         implements FavoriteContract.View, PetListAdapter.OnPetClickListener {
+    private static final String TAG = "FavoriteFragment";
 
     private Unbinder mUnbinder;
     private FavoritePresenter presenter;
@@ -96,7 +99,6 @@ public class FavoriteFragment extends BasePresenterFragment<FavoritePresenter, F
         this.presenter = presenter;
     }
 
-
     @Override
     public Activity getActivityContext() {
         return getActivity();
@@ -104,7 +106,8 @@ public class FavoriteFragment extends BasePresenterFragment<FavoritePresenter, F
 
     @Override
     public void loadData(List<PetBean> pets) {
-        if (pets == null) {
+        if (pets == null || pets.isEmpty()) {
+            Timber.tag(TAG).d("pets is null");
             noFavorite.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.INVISIBLE);
             return;
@@ -116,5 +119,16 @@ public class FavoriteFragment extends BasePresenterFragment<FavoritePresenter, F
     @Override
     public void onItemClick(PetBean pet) {
         mClickHandler.onItemClick(pet);
+    }
+
+    public void scrollToTopCallback() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(getActivity()) {
+            @Override protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
+        smoothScroller.setTargetPosition(0);
+        layoutManager.startSmoothScroll(smoothScroller);
     }
 }

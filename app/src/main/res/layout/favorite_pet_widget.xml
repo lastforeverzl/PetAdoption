@@ -69,17 +69,6 @@
                 tools:text="Adoptable" />
 
             <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="12sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#8f14181a"
-                tools:text="Dublin" />
-
-            <TextView
                 android:id="@+id/tv_updated_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
