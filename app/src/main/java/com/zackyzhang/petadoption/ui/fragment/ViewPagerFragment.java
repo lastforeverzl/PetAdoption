@@ -97,7 +97,6 @@ public class ViewPagerFragment extends Fragment {
             Timber.tag(TAG).d("zipcode is not null");
             setupView();
         }
-//        setupView();
         return root;
     }
 
@@ -194,6 +193,7 @@ public class ViewPagerFragment extends Fragment {
         public Fragment getItem(int position) {
             Timber.tag(TAG).d(mZipCode);
             return TabFragment.newInstance(animalType[position], mZipCode);
+//            return TabFragment.newInstance(animalType[position], "94568"); // For test on emulator
         }
 
         @Override

@@ -128,7 +128,7 @@ public class TabFragment extends BasePresenterFragment<TabPresenter, TabContract
             return;
         }
         mPetList = pets;
-        mAdapter.setData(pets);
+        mAdapter.setData(mPetList);
     }
 
     @Override

@@ -23,17 +23,24 @@ import com.zackyzhang.petadoption.api.GoogleApiHelper;
 import com.zackyzhang.petadoption.api.LocationCallback;
 import com.zackyzhang.petadoption.api.model.PetBean;
 import com.zackyzhang.petadoption.ui.PetOnClickHandler;
+import com.zackyzhang.petadoption.ui.ShelterContactListener;
 import com.zackyzhang.petadoption.ui.fragment.FavoriteFragment;
+import com.zackyzhang.petadoption.ui.fragment.PetDetailFragment;
+import com.zackyzhang.petadoption.ui.fragment.ShelterPetsFragment;
 import com.zackyzhang.petadoption.ui.fragment.SheltersFragment;
 import com.zackyzhang.petadoption.ui.fragment.ViewPagerFragment;
 import com.zackyzhang.petadoption.widget.WidgetUpdateJobDispatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity
-        implements LocationCallback, PetOnClickHandler, SheltersFragment.ShelterOnClickHandler {
+        implements LocationCallback, PetOnClickHandler,
+        PetDetailFragment.PetDetailPaneCallback, ShelterContactListener {
     private static final String TAG = "MainActivity";
 
     private final String VIEWPAGER_FRAGMENT_TAG = "ViewPagerFragmentTAG";
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     private SheltersFragment mSheltersFragment;
     private FavoriteFragment mFavoriteFragment;
     private GoogleApiHelper mGoogleApiHelper;
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,20 @@ public class MainActivity extends AppCompatActivity
         mGoogleApiHelper = MyApplication.getGoogleApiHelper();
         mGoogleApiHelper.setLocationCallback(this);
         WidgetUpdateJobDispatcher.scheduleFirebaseJobDispatcher(this);
+
+        if (findViewById(R.id.detail_fragment) != null) {
+            mTwoPane = true;
+//            Fragment fragment = mFragmentManager.findFragmentById(R.id.contentContainer);
+//            if (fragment instanceof ViewPagerFragment) {
+//                PetDetailFragment detailFragment = (PetDetailFragment) mFragmentManager
+//                        .findFragmentById(R.id.detail_fragment);
+//                detailFragment = PetDetailFragment.newInstance(this);
+//            }
+
+        } else {
+            mTwoPane = false;
+
+        }
     }
 
     @Override
@@ -165,26 +187,52 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onItemClick(PetBean pet) {
         Timber.tag(TAG).d("pet name: " + pet.getName());
-        Intent intent = PetDetailActivity.newIntent(this, pet);
-        startActivity(intent);
+        if (mTwoPane) {
+            PetDetailFragment detailFragment = PetDetailFragment.newInstance(pet);
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.detail_fragment, detailFragment)
+                    .commit();
+        } else {
+            Intent intent = PetDetailActivity.newIntent(this, pet);
+            startActivity(intent);
+        }
     }
 
     @Override
-    public void onClickShelter(String id, String name, String phone, String email, String lat, String lng, String address) {
-        Timber.tag(TAG).d("shelter id: " + id);
-        Intent intent = ShelterPetsActivity.newIntent(this, id, name, phone, email, lat, lng, address);
-        startActivity(intent);
+    public void onLocationApiConnected() {
+        Timber.tag(TAG).d("onLocationApiConnected");
+        setupBottomBar();
     }
 
     @Override
-    public void onClickCall(String number) {
+    public void onSliderClick(List<String> urls, int position) {
+        Intent intent = GalleryActivity.newIntent(this, (ArrayList) urls, position);
+        startActivity(intent);
+    }
+
+    // ShelterContactListener method
+    @Override
+    public void clickShelter(String id, String name, String phone, String email, String lat, String lng, String address) {
+        if (mTwoPane) {
+            ShelterPetsFragment shelterPetsFragment = ShelterPetsFragment.newInstance(id, name, phone, email, lat, lng, address);
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.detail_fragment, shelterPetsFragment)
+                    .commit();
+        } else {
+            Intent intent = ShelterPetsActivity.newIntent(this, id, name, phone, email, lat, lng, address);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void callShelter(String number) {
         Uri call = Uri.parse("tel:" + number);
         Intent intent = new Intent(Intent.ACTION_DIAL, call);
         startActivity(intent);
     }
 
     @Override
-    public void onClickDirection(String lat, String lng, String address) {
+    public void directToShelter(String lat, String lng, String address) {
         Uri gmmIntentUri = Uri.parse("geo:" + lat + "," + lng + "?q=" + address);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
@@ -192,8 +240,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLocationApiConnected() {
-        Timber.tag(TAG).d("onLocationApiConnected");
-        setupBottomBar();
+    public void emailShelter(String email) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }

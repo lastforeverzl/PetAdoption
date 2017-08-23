@@ -76,8 +76,6 @@ public class PetListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             View view = mLayoutInflater.inflate(R.layout.pet_item_list, parent, false);
             holder = new Holder(view);
         }
-//        View view = mLayoutInflater.inflate(R.layout.pet_item_list, parent, false);
-//        return new Holder(view);
         return holder;
     }
 
@@ -88,15 +86,7 @@ public class PetListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else {
             ((Holder) holder).bind(mList.get(position));
         }
-//        PetBean pet = mList.get(position);
-//        String name = pet.getName();
-//        String info = ApiUtils.getPetInfo(pet);
-//        String location = ApiUtils.getPetLocation(pet.getContact());
-//        holder.mName.setText(name);
-//        holder.mInformation.setText(info);
-//        holder.mLocation.setText(location);
-//        String url = ApiUtils.getFirstPhotoUrl(pet);
-//        Picasso.with(mContext).load(url).fit().centerCrop().into(holder.mImageView);
+
     }
 
     @Override
@@ -195,7 +185,6 @@ public class PetListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             onHeaderClickListener.onDirectionClick(lat, lng, address);
         }
     }
-
 
     class Holder extends RecyclerView.ViewHolder {
 

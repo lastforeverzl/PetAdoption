@@ -32,6 +32,7 @@ import com.zackyzhang.petadoption.api.GoogleApiHelper;
 import com.zackyzhang.petadoption.api.model.ShelterBean;
 import com.zackyzhang.petadoption.ui.base.BasePresenterFragment;
 import com.zackyzhang.petadoption.ui.base.PresenterFactory;
+import com.zackyzhang.petadoption.ui.ShelterContactListener;
 import com.zackyzhang.petadoption.ui.base.SheltersContract;
 import com.zackyzhang.petadoption.ui.presenter.SheltersPresenter;
 import com.zackyzhang.petadoption.ui.presenter.SheltersPresenterFactory;
@@ -66,15 +67,7 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
     private GoogleApiClient mGoogleApiClient;
     private double[] currentLatLng;
 
-    public interface ShelterOnClickHandler {
-        void onClickShelter(String id, String name, String phone, String email, String lat, String lng, String adress);
-
-        void onClickCall(String number);
-
-        void onClickDirection(String lat, String lng, String address);
-    }
-
-    private ShelterOnClickHandler mClickHandler;
+    private ShelterContactListener mShelterContactListener;
 
     public static SheltersFragment newInstance() {
         SheltersFragment fragment = new SheltersFragment();
@@ -84,8 +77,8 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ShelterOnClickHandler) {
-            mClickHandler = (ShelterOnClickHandler) context;
+        if (context instanceof ShelterContactListener) {
+            mShelterContactListener = (ShelterContactListener) context;
         }
     }
 
@@ -154,6 +147,7 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
         Timber.tag(TAG).d("currentLatLng: " + currentLatLng[0] + currentLatLng[1]);
         mZipCode = getZipCode(currentLatLng);
         presenter.setZipCode(mZipCode);
+//        presenter.setZipCode("94568"); // for test on emulator
     }
 
     private String getZipCode(double[] latLng) {
@@ -320,7 +314,7 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
                 int adapterPosition = getAdapterPosition();
                 ShelterBean shelter = mList.get(adapterPosition);
                 String address = ApiUtils.shelterAddress(shelter);
-                mClickHandler.onClickShelter(shelter.getId(),
+                mShelterContactListener.clickShelter(shelter.getId(),
                         shelter.getName(),
                         shelter.getPhone(),
                         shelter.getEmail(),
@@ -335,7 +329,7 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
                 ShelterBean shelter = mList.get(adapterPosition);
                 if (shelter.getPhone() != null) {
                     String number = ApiUtils.cleanPhoneNumber(shelter.getPhone());
-                    mClickHandler.onClickCall(number);
+                    mShelterContactListener.callShelter(number);
                 }
             }
 
@@ -345,7 +339,7 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
                 ShelterBean shelter = mList.get(adapterPosition);
                 String address = ApiUtils.shelterAddress(shelter);
                 if (shelter.getLatitude() != null && shelter.getLongitude() != null) {
-                    mClickHandler.onClickDirection(shelter.getLatitude(), shelter.getLongitude(), address);
+                    mShelterContactListener.directToShelter(shelter.getLatitude(), shelter.getLongitude(), address);
                 }
             }
 
