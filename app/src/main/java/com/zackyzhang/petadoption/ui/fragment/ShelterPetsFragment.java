@@ -187,7 +187,7 @@ public class ShelterPetsFragment extends BasePresenterFragment<ShelterPetsPresen
     }
 
     @Override
-    public void onItemClick(PetBean pet) {
-        mPetOnClickHandler.onItemClick(pet);
+    public void onItemClick(PetBean pet, View transitionView) {
+        mPetOnClickHandler.onItemClick(pet, transitionView);
     }
 }

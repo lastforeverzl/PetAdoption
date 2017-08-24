@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
@@ -73,17 +74,11 @@ public class MainActivity extends AppCompatActivity
 
         if (findViewById(R.id.detail_fragment) != null) {
             mTwoPane = true;
-//            Fragment fragment = mFragmentManager.findFragmentById(R.id.contentContainer);
-//            if (fragment instanceof ViewPagerFragment) {
-//                PetDetailFragment detailFragment = (PetDetailFragment) mFragmentManager
-//                        .findFragmentById(R.id.detail_fragment);
-//                detailFragment = PetDetailFragment.newInstance(this);
-//            }
-
         } else {
             mTwoPane = false;
 
         }
+        setupBottomBar();
     }
 
     @Override
@@ -185,7 +180,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(PetBean pet) {
+    public void onItemClick(PetBean pet, View transitionView) {
         Timber.tag(TAG).d("pet name: " + pet.getName());
         if (mTwoPane) {
             PetDetailFragment detailFragment = PetDetailFragment.newInstance(pet);
@@ -194,14 +189,22 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         } else {
             Intent intent = PetDetailActivity.newIntent(this, pet);
-            startActivity(intent);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                        MainActivity.this, transitionView, transitionView.getTransitionName())
+                        .toBundle();
+                startActivity(intent, bundle);
+            } else {
+                startActivity(intent);
+            }
         }
     }
 
     @Override
     public void onLocationApiConnected() {
-        Timber.tag(TAG).d("onLocationApiConnected");
-        setupBottomBar();
+        if (viewPagerFragment != null) {
+            viewPagerFragment.googleClientConnected(this);
+        }
     }
 
     @Override

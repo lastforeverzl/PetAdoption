@@ -132,8 +132,8 @@ public class TabFragment extends BasePresenterFragment<TabPresenter, TabContract
     }
 
     @Override
-    public void onItemClick(PetBean pet) {
-        mClickHandler.onItemClick(pet);
+    public void onItemClick(PetBean pet, View transitionView) {
+        mClickHandler.onItemClick(pet, transitionView);
     }
 
 }

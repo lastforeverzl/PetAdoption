@@ -1,5 +1,6 @@
 package com.zackyzhang.petadoption.ui.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -238,9 +239,16 @@ public class SearchActivity extends BasePresenterActivity<SearchPresenter, Searc
     }
 
     @Override
-    public void onItemClick(PetBean pet) {
+    public void onItemClick(PetBean pet, View transitionView) {
         Intent intent = PetDetailActivity.newIntent(this, pet);
-        startActivity(intent);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                    SearchActivity.this, transitionView, transitionView.getTransitionName())
+                    .toBundle();
+            startActivity(intent, bundle);
+        } else {
+            startActivity(intent);
+        }
     }
 
 }

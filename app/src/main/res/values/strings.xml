@@ -12,6 +12,9 @@
     <string name="no_favorite_pets">No favorite pets found</string>
     <string name="auto_complete_hint">Search for address</string>
     <string name="content_authority" translatable="false">com.android.popularmovies.popularmovies</string>
+    <string name="image_transition_name">image_transition_name</string>
+    <string name="info_transition_name">info_transition_name</string>
+    <string name="name_transition_name">name_transition_name</string>
 
     <!-- - - - - - - - - - - - - - - -
       - Used by SearchFilterPreferences  -

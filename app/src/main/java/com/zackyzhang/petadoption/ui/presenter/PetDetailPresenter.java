@@ -48,7 +48,6 @@ public class PetDetailPresenter implements PetDetailContract.Presenter {
     @Override
     public void setShelterId(String id) {
         mDataManager = new DataManager<ShelterGetResponse>() {
-
             @Override
             public void onDataLoaded(ShelterGetResponse data) {
                 Timber.tag(TAG).d(data.getPetfinder().getShelter().getName());

@@ -75,7 +75,6 @@ public class GoogleApiHelper implements GoogleApiClient.ConnectionCallbacks, Goo
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Timber.tag("OkHttp").d("google api client connected");
-//        mGoogleApiListener.googleApiConnected();
         mLocationCallback.onLocationApiConnected();
     }
 

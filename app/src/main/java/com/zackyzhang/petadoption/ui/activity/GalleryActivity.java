@@ -2,6 +2,7 @@ package com.zackyzhang.petadoption.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.github.chrisbanes.photoview.PhotoView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zackyzhang.petadoption.R;
 
@@ -54,6 +56,7 @@ public class GalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
         ButterKnife.bind(this);
+        supportPostponeEnterTransition();
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -67,6 +70,9 @@ public class GalleryActivity extends AppCompatActivity {
         setToolbarTitle(position);
 
         ViewPager viewPager = findViewById(R.id.view_pager);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            viewPager.setTransitionName(getString(R.string.image_transition_name));
+        }
         viewPager.setAdapter(new SamplePagerAdapter(this));
         viewPager.setCurrentItem(position);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -85,13 +91,15 @@ public class GalleryActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+//                finish();
+                supportFinishAfterTransition();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -114,7 +122,19 @@ public class GalleryActivity extends AppCompatActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             PhotoView photoView = new PhotoView(container.getContext());
-            Picasso.with(mContext).load(urls.get(position)).into(photoView);
+            Picasso.with(mContext)
+                    .load(urls.get(position))
+                    .into(photoView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            supportStartPostponedEnterTransition();
+                        }
+
+                        @Override
+                        public void onError() {
+                            supportStartPostponedEnterTransition();
+                        }
+                    });
             container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
 

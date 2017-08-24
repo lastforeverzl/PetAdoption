@@ -1,6 +1,7 @@
 package com.zackyzhang.petadoption.ui;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,7 +45,7 @@ public class PetListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private OnHeaderClickListener onHeaderClickListener;
 
     public interface OnPetClickListener {
-        void onItemClick(PetBean pet);
+        void onItemClick(PetBean pet, View transitionView);
     }
 
     public interface OnHeaderClickListener {
@@ -206,7 +207,7 @@ public class PetListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void onClick() {
             int adapterPosition = getAdapterPosition();
             PetBean pet = mList.get(adapterPosition);
-            onPetClickListener.onItemClick(pet);
+            onPetClickListener.onItemClick(pet, mImageView);
         }
 
         public void bind(PetBean pet) {
@@ -220,6 +221,10 @@ public class PetListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mInformation.setText(info);
             String url = ApiUtils.getFirstPhotoUrl(pet);
             Picasso.with(mContext).load(url).placeholder(R.drawable.no_image_placeholder).fit().centerCrop().into(mImageView);
+            String imageTransition = mContext.getString(R.string.image_transition_name);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mImageView.setTransitionName(imageTransition);
+            }
         }
     }
 }

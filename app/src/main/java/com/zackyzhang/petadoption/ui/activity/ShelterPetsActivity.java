@@ -1,5 +1,6 @@
 package com.zackyzhang.petadoption.ui.activity;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.zackyzhang.petadoption.R;
 import com.zackyzhang.petadoption.api.model.PetBean;
@@ -139,8 +141,15 @@ public class ShelterPetsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(PetBean pet) {
+    public void onItemClick(PetBean pet, View transitionView) {
         Intent intent = PetDetailActivity.newIntent(this, pet);
-        startActivity(intent);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                    ShelterPetsActivity.this, transitionView, transitionView.getTransitionName())
+                    .toBundle();
+            startActivity(intent, bundle);
+        } else {
+            startActivity(intent);
+        }
     }
 }

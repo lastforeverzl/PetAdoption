@@ -45,6 +45,7 @@ public class ViewPagerFragment extends Fragment {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
+    private Context mContext;
     private Unbinder mUnbinder;
     private static String[] animalType;
     private String mZipCode;
@@ -68,19 +69,11 @@ public class ViewPagerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         animalType = getActivity().getResources().getStringArray(R.array.animals);
-        mGoogleApiHelper = MyApplication.getGoogleApiHelper();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Timber.tag(TAG).d("ViewPagerFragment destroy");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Timber.tag(TAG).d("ViewPagerFragment onDestroyView");
         mUnbinder.unbind();
     }
 
@@ -88,16 +81,20 @@ public class ViewPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_viewpager, container, false);
-        Timber.tag(TAG).d("ViewPagerFragment onCreateView");
         mUnbinder = ButterKnife.bind(this, root);
-        if (mZipCode == null) {
-            Timber.tag(TAG).d("zipcode is null");
-            permissionRequest();
-        } else {
-            Timber.tag(TAG).d("zipcode is not null");
+        if (mZipCode != null) {
             setupView();
         }
         return root;
+    }
+
+    public void googleClientConnected(Context context) {
+        mContext = context;
+        mGoogleApiHelper = MyApplication.getGoogleApiHelper();
+        mGoogleApiClient = mGoogleApiHelper.getGoogleApiClient();
+        if (mZipCode == null) {
+            permissionRequest();
+        }
     }
 
     private void setupView() {
@@ -106,14 +103,12 @@ public class ViewPagerFragment extends Fragment {
     }
 
     private void getZipCode() {
-        mGoogleApiClient = mGoogleApiHelper.getGoogleApiClient();
         currentLatLng = getCurrentLocation(mGoogleApiClient);
         mZipCode = getZipCode(currentLatLng);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Timber.tag(TAG).d("onRequestPermissionsResult");
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -134,12 +129,10 @@ public class ViewPagerFragment extends Fragment {
     }
 
     public void permissionRequest() {
-        Timber.tag(TAG).d("onLocationApiConnected");
-        if (ActivityCompat.checkSelfPermission(getActivity(),
+        if (ActivityCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-            Timber.tag(TAG).d("onLocationApiConnected loop");
             return;
         }
         getZipCode();
@@ -147,7 +140,7 @@ public class ViewPagerFragment extends Fragment {
     }
 
     public String getZipCode(double[] latLng) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latLng[0], latLng[1], 1);
             return addresses.get(0).getPostalCode();
@@ -158,7 +151,7 @@ public class ViewPagerFragment extends Fragment {
     }
 
     public double[] getCurrentLocation(GoogleApiClient googleApiClient) {
-        if (ActivityCompat.checkSelfPermission(getActivity(),
+        if (ActivityCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }

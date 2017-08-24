@@ -1,8 +1,10 @@
 package com.zackyzhang.petadoption.ui.activity;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -90,7 +92,7 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
 
         setupSlider();
         setupPetInfo();
-
+        setupTransitionName();
     }
 
     @Override
@@ -109,7 +111,7 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                supportFinishAfterTransition();
                 return true;
             case R.id.favorite_pet:
                 if (isInFavorite) {
@@ -176,10 +178,20 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
         isInFavorite = true;
     }
 
+    private void setupTransitionName() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mSliderLayout.setTransitionName(getString(R.string.image_transition_name));
+        }
+    }
+
     private void setupSlider() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mSliderLayout.setTransitionName(getString(R.string.image_transition_name));
+        }
         mUrls = ApiUtils.getPhotoUrls(mPet);
         if (mUrls.isEmpty()) {
             DefaultSliderView sliderView = new DefaultSliderView(this);
+
             sliderView
                     .image(R.drawable.no_image_placeholder)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
@@ -238,7 +250,15 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
     public void onSliderClick(BaseSliderView slider) {
         int position = mSliderLayout.getCurrentPosition();
         Intent intent = GalleryActivity.newIntent(this, (ArrayList) mUrls, position);
-        startActivity(intent);
+//        startActivity(intent);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                    PetDetailActivity.this, mSliderLayout, mSliderLayout.getTransitionName())
+                    .toBundle();
+            startActivity(intent, bundle);
+        } else {
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.bt_get_direction)
