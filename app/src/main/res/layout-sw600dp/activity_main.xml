@@ -45,13 +45,16 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <com.roughike.bottombar.BottomBar
+    <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:elevation="8dp"
-        app:bb_tabXmlResource="@xml/bottombar_tabs"/>
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:itemBackground="@color/colorWhite"
+        app:menu="@menu/bottom_navigation_main" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -61,6 +61,7 @@ public class ViewPagerFragment extends Fragment {
 
     public static ViewPagerFragment newInstance() {
         ViewPagerFragment fragment = new ViewPagerFragment();
+        Timber.tag(TAG).d("viewpager newInstance");
         return fragment;
     }
 
@@ -69,12 +70,20 @@ public class ViewPagerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         animalType = getActivity().getResources().getStringArray(R.array.animals);
+        Timber.tag(TAG).d("onCreate");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        Timber.tag(TAG).d("onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Timber.tag(TAG).d("onDestroy");
     }
 
     @Nullable
@@ -82,16 +91,21 @@ public class ViewPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_viewpager, container, false);
         mUnbinder = ButterKnife.bind(this, root);
+        mGoogleApiHelper = MyApplication.getGoogleApiHelper();
+        mGoogleApiClient = mGoogleApiHelper.getGoogleApiClient();
         if (mZipCode != null) {
             setupView();
+        } else {
+            if (mGoogleApiClient.isConnected()) {
+                permissionRequest();
+            }
         }
         return root;
     }
 
     public void googleClientConnected(Context context) {
+        Timber.tag(TAG).d("googleClientConnected");
         mContext = context;
-        mGoogleApiHelper = MyApplication.getGoogleApiHelper();
-        mGoogleApiClient = mGoogleApiHelper.getGoogleApiClient();
         if (mZipCode == null) {
             permissionRequest();
         }
@@ -103,6 +117,10 @@ public class ViewPagerFragment extends Fragment {
     }
 
     private void getZipCode() {
+        if (!mGoogleApiClient.isConnected()) {
+            Timber.tag(TAG).d("getZipCode mGoogleApiClient not connected");
+            return;
+        }
         currentLatLng = getCurrentLocation(mGoogleApiClient);
         mZipCode = getZipCode(currentLatLng);
     }
@@ -129,7 +147,7 @@ public class ViewPagerFragment extends Fragment {
     }
 
     public void permissionRequest() {
-        if (ActivityCompat.checkSelfPermission(mContext,
+        if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
@@ -140,7 +158,7 @@ public class ViewPagerFragment extends Fragment {
     }
 
     public String getZipCode(double[] latLng) {
-        Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latLng[0], latLng[1], 1);
             return addresses.get(0).getPostalCode();
@@ -151,7 +169,7 @@ public class ViewPagerFragment extends Fragment {
     }
 
     public double[] getCurrentLocation(GoogleApiClient googleApiClient) {
-        if (ActivityCompat.checkSelfPermission(mContext,
+        if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }

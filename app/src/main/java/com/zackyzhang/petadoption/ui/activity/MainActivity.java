@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabReselectListener;
-import com.roughike.bottombar.OnTabSelectListener;
 import com.zackyzhang.petadoption.MyApplication;
 import com.zackyzhang.petadoption.R;
 import com.zackyzhang.petadoption.api.GoogleApiHelper;
@@ -46,11 +44,12 @@ public class MainActivity extends AppCompatActivity
     private final String VIEWPAGER_FRAGMENT_TAG = "ViewPagerFragmentTAG";
     private final String SHELTER_FRAGMENT_TAG = "ShelterFragmentTAG";
     private final String FAVORITE_FRAGMENT_TAG = "FavoriteFragmentTAG";
+    private final String BOTTOM_BAR_STATE = "BottombarState";
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.bottomNavigationBar)
-    BottomBar mBottomBar;
+    BottomNavigationView mBottomBar;
 
     private FragmentManager mFragmentManager;
     private ViewPagerFragment viewPagerFragment;
@@ -58,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     private FavoriteFragment mFavoriteFragment;
     private GoogleApiHelper mGoogleApiHelper;
     private boolean mTwoPane;
+    private int bottomBarState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,27 @@ public class MainActivity extends AppCompatActivity
 
         }
         setupBottomBar();
+        if (savedInstanceState == null) {
+            viewPagerFragment = ViewPagerFragment.newInstance();
+            mFragmentManager.beginTransaction()
+                    .addToBackStack(VIEWPAGER_FRAGMENT_TAG)
+                    .replace(R.id.contentContainer, viewPagerFragment, VIEWPAGER_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            bottomBarState = savedInstanceState.getInt(BOTTOM_BAR_STATE);
+            Timber.tag(TAG).d("id restore: " + bottomBarState);
+            if (bottomBarState == R.id.tab_nearby)
+                mBottomBar.setSelectedItemId(R.id.tab_nearby);
+            mBottomBar.setSelectedItemId(bottomBarState);
+        }
+
+        Timber.tag(TAG).d("onCreate");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Timber.tag(TAG).d("onResume");
     }
 
     @Override
@@ -91,6 +112,12 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
         MyApplication.getGoogleApiHelper().disconnect();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(BOTTOM_BAR_STATE, mBottomBar.getSelectedItemId());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -116,34 +143,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupBottomBar() {
-        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        Timber.tag(TAG).d("mBottomBar.getSelectedItemId: " + mBottomBar.getSelectedItemId());
+        mBottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onTabSelected(@IdRes int tabId) {
-                onTabItemSelected(tabId);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                onTabItemSelected(item.getItemId());
+                return true;
             }
         });
 
-        mBottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-            @Override
-            public void onTabReSelected(@IdRes int tabId) {
-                if (tabId == R.id.tab_shelters || tabId == R.id.tab_favorites) {
-                    Fragment fragment = mFragmentManager.findFragmentById(R.id.contentContainer);
-                    if (fragment instanceof SheltersFragment) {
-                        ((SheltersFragment) fragment).scrollToTopCallback();
-                    }
-                    if (fragment instanceof FavoriteFragment) {
-                        ((FavoriteFragment) fragment).scrollToTopCallback();
-                    }
-                }
-            }
-        });
     }
 
     private void onTabItemSelected(int id) {
         switch (id) {
             case R.id.tab_nearby:
+                Timber.tag(TAG).d("select tab_nearby");
+                if (mTwoPane) {
+                    Fragment fragment = mFragmentManager.findFragmentById(R.id.detail_fragment);
+                    if (fragment != null) {
+                        mFragmentManager.beginTransaction()
+                                .remove(mFragmentManager.findFragmentById(R.id.detail_fragment))
+                                .commit();
+                    }
+                }
                 viewPagerFragment = (ViewPagerFragment)
-                        mFragmentManager.findFragmentByTag(VIEWPAGER_FRAGMENT_TAG);
+                    mFragmentManager.findFragmentByTag(VIEWPAGER_FRAGMENT_TAG);
                 if (viewPagerFragment == null) {
                     viewPagerFragment = ViewPagerFragment.newInstance();
                 }
@@ -153,6 +177,15 @@ public class MainActivity extends AppCompatActivity
                         .commit();
                 break;
             case R.id.tab_favorites:
+                Timber.tag(TAG).d("select tab_favorites");
+                if (mTwoPane) {
+                    Fragment fragment = mFragmentManager.findFragmentById(R.id.detail_fragment);
+                    if (fragment != null) {
+                        mFragmentManager.beginTransaction()
+                                .remove(mFragmentManager.findFragmentById(R.id.detail_fragment))
+                                .commit();
+                    }
+                }
                 mFavoriteFragment = (FavoriteFragment)
                         mFragmentManager.findFragmentByTag(FAVORITE_FRAGMENT_TAG);
                 if (mFavoriteFragment == null) {
@@ -164,6 +197,15 @@ public class MainActivity extends AppCompatActivity
                         .commit();
                 break;
             case R.id.tab_shelters:
+                Timber.tag(TAG).d("select tab_shelters");
+                if (mTwoPane) {
+                    Fragment fragment = mFragmentManager.findFragmentById(R.id.detail_fragment);
+                    if (fragment != null) {
+                        mFragmentManager.beginTransaction()
+                                .remove(mFragmentManager.findFragmentById(R.id.detail_fragment))
+                                .commit();
+                    }
+                }
                 mSheltersFragment = (SheltersFragment)
                         mFragmentManager.findFragmentByTag(SHELTER_FRAGMENT_TAG);
                 if (mSheltersFragment == null) {
@@ -202,9 +244,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLocationApiConnected() {
-        if (viewPagerFragment != null) {
-            viewPagerFragment.googleClientConnected(this);
+        Fragment fragment = mFragmentManager.findFragmentById(R.id.contentContainer);
+        if (fragment instanceof ViewPagerFragment) {
+            Timber.tag(TAG).d("current fragment: ViewPagerFragment ");
+            if (viewPagerFragment != null) {
+                viewPagerFragment.googleClientConnected(this);
+            }
         }
+        if (fragment instanceof SheltersFragment) {
+            Timber.tag(TAG).d("current fragment: SheltersFragment");
+            if (mSheltersFragment != null) {
+                mSheltersFragment.googleClientConnected();
+            }
+        }
+        if (fragment instanceof FavoriteFragment) {
+            Timber.tag(TAG).d("current fragment: FavoriteFragment");
+
+        }
+//        if (viewPagerFragment != null) {
+//            viewPagerFragment.googleClientConnected(this);
+//        }
+//        if (mSheltersFragment != null) {
+//            mSheltersFragment.googleClientConnected();
+//        }
     }
 
     @Override

@@ -141,8 +141,16 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
         }
     }
 
+    public void googleClientConnected() {
+        Timber.tag(TAG).d("googleClientConnected");
+        if (mZipCode == null)
+            checkPermission();
+    }
+
     private void sendPresenterZipCode() {
         mGoogleApiClient = mGoogleApiHelper.getGoogleApiClient();
+        if (!mGoogleApiClient.isConnected())
+            return;
         currentLatLng = getCurrentLocation(mGoogleApiClient);
         Timber.tag(TAG).d("currentLatLng: " + currentLatLng[0] + currentLatLng[1]);
         mZipCode = getZipCode(currentLatLng);

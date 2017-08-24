@@ -166,9 +166,7 @@
                     android:textColor="@color/colorWhite"
                     android:fontFamily="sans-serif-medium"
                     android:textStyle="normal"
-                    android:text="@string/shelter_email"
-                    android:focusable="true"
-                    android:nextFocusRight="@id/bt_get_direction">
+                    android:text="@string/shelter_email">
                 </Button>
 
                 <Button

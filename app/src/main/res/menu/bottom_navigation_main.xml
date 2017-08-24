@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/tab_nearby"
+        android:enabled="true"
+        android:icon="@drawable/ic_nearby"
+        android:title="Nearby"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/tab_favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorites"
+        android:title="Favorites"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/tab_shelters"
+        android:enabled="true"
+        android:icon="@drawable/ic_shelters"
+        android:title="Shelters"
+        app:showAsAction="ifRoom" />
+</menu>
