@@ -16,6 +16,6 @@ public class SheltersPresenterFactory implements PresenterFactory<SheltersPresen
 
     @Override
     public SheltersPresenter create() {
-        return new SheltersPresenter(mZipCode);
+        return new SheltersPresenter();
     }
 }

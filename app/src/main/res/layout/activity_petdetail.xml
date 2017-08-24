@@ -32,8 +32,7 @@
                 android:layout_height="300dp"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways"
-                />
+                app:layout_scrollFlags="scroll|enterAlways"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -167,7 +166,9 @@
                     android:textColor="@color/colorWhite"
                     android:fontFamily="sans-serif-medium"
                     android:textStyle="normal"
-                    android:text="@string/shelter_email">
+                    android:text="@string/shelter_email"
+                    android:focusable="true"
+                    android:nextFocusRight="@id/bt_get_direction">
                 </Button>
 
                 <Button
@@ -181,7 +182,10 @@
                     android:textColor="@color/colorWhite"
                     android:fontFamily="sans-serif-medium"
                     android:textStyle="normal"
-                    android:text="@string/shelter_direction">
+                    android:text="@string/shelter_direction"
+                    android:contentDescription="@string/cd_get_direction"
+                    android:focusable="true"
+                    android:nextFocusLeft="@id/bt_email">
                 </Button>
 
             </LinearLayout>

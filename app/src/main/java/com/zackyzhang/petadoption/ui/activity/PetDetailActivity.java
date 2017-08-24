@@ -191,7 +191,6 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
         mUrls = ApiUtils.getPhotoUrls(mPet);
         if (mUrls.isEmpty()) {
             DefaultSliderView sliderView = new DefaultSliderView(this);
-
             sliderView
                     .image(R.drawable.no_image_placeholder)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
@@ -250,7 +249,6 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
     public void onSliderClick(BaseSliderView slider) {
         int position = mSliderLayout.getCurrentPosition();
         Intent intent = GalleryActivity.newIntent(this, (ArrayList) mUrls, position);
-//        startActivity(intent);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
                     PetDetailActivity.this, mSliderLayout, mSliderLayout.getTransitionName())

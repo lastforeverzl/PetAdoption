@@ -68,7 +68,8 @@
             android:textColor="@color/colorGreen"
             android:fontFamily="sans-serif-medium"
             android:textStyle="normal"
-            android:text="@string/shelter_direction"/>
+            android:text="@string/shelter_direction"
+            android:contentDescription="@string/cd_get_direction"/>
 
     </LinearLayout>
 
@@ -94,7 +95,8 @@
             android:textSize="14sp"
             android:textColor="@color/colorGreen"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/shelter_call"/>
+            android:text="@string/shelter_call"
+            android:contentDescription="@string/cd_call_shelter"/>
 
     </LinearLayout>
 

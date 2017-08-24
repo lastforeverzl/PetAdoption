@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:background="@null"
-                app:srcCompat="@drawable/ic_delete_black_24dp"/>
+                app:srcCompat="@drawable/ic_delete_black_24dp"
+                android:contentDescription="@string/cd_delete_recent_search"/>
 
         </RelativeLayout>
 
@@ -64,7 +65,8 @@
             android:background="@null"
             android:layout_weight="1.5"
             app:srcCompat="@drawable/ic_arrow_back_black"
-            android:transitionName="@string/transition_search_back"/>
+            android:transitionName="@string/transition_search_back"
+            android:contentDescription="@string/cd_navigate_up"/>
 
         <fragment
             android:id="@+id/place_autocomplete_fragment"
@@ -79,7 +81,8 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:layout_weight="1.5"
-            app:srcCompat="@drawable/ic_filter_list_black_24px"/>
+            app:srcCompat="@drawable/ic_filter_list_black_24px"
+            android:contentDescription="@string/cd_search_setting"/>
 
     </LinearLayout>
 

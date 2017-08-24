@@ -74,5 +74,10 @@
     <string name="pref_age_senior" translatable="false">Senior</string>
 
 
+    <string name="cd_get_direction">get direction to shelter</string>
+    <string name="cd_call_shelter">call shelter</string>
+    <string name="cd_delete_recent_search">delete recent search</string>
+    <string name="cd_search_setting">search setting</string>
+    <string name="cd_navigate_up">navigate up</string>
 
 </resources>
