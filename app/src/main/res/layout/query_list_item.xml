@@ -21,7 +21,8 @@
             android:id="@+id/im_query_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:srcCompat="@drawable/ic_query_builder_24px"/>
+            app:srcCompat="@drawable/ic_query_builder_24px"
+            android:contentDescription="@string/cd_recent_search_icon"/>
 
     </LinearLayout>
 

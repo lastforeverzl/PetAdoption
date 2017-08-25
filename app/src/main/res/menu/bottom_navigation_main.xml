@@ -5,18 +5,18 @@
         android:id="@+id/tab_nearby"
         android:enabled="true"
         android:icon="@drawable/ic_nearby"
-        android:title="Nearby"
+        android:title="@string/bottom_navigation_nearby"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/tab_favorites"
         android:enabled="true"
         android:icon="@drawable/ic_favorites"
-        android:title="Favorites"
+        android:title="@string/bottom_navigation_favorites"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/tab_shelters"
         android:enabled="true"
         android:icon="@drawable/ic_shelters"
-        android:title="Shelters"
+        android:title="@string/bottom_navigation_shelters"
         app:showAsAction="ifRoom" />
 </menu>

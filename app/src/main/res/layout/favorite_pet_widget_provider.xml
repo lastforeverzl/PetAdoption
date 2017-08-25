@@ -19,7 +19,7 @@
             android:textColor="@color/colorWhite"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
-            android:text="Petfinder"/>
+            android:text="@string/widget_title"/>
 
         <ListView
             android:id="@+id/widget_list_view"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="No Favorite Pets"
+            android:text="@string/no_favorite_pets"
             android:textSize="20sp"
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />

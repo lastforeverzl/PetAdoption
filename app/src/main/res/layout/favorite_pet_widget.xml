@@ -11,7 +11,8 @@
         android:id="@+id/iv_photo"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/cd_pet_image"/>
 
     <LinearLayout
         android:orientation="vertical"

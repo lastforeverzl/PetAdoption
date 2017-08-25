@@ -5,6 +5,6 @@
         android:id="@+id/favorite_pet"
         android:icon="@drawable/ic_favorite_border_24dp"
         app:showAsAction="always"
-        android:title="favorite">
+        android:title="@string/menu_item_favorite">
     </item>
 </menu>

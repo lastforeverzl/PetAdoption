@@ -46,7 +46,8 @@
         android:clickable="true"
         app:layout_anchor="@id/appbar_layout"
         app:srcCompat="@drawable/ic_favorite_border_24dp"
-        app:layout_anchorGravity="bottom|right|end"/>
+        app:layout_anchorGravity="bottom|right|end"
+        android:contentDescription="@string/cd_favorite_fab"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

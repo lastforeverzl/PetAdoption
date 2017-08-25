@@ -15,6 +15,14 @@
     <string name="image_transition_name">image_transition_name</string>
     <string name="info_transition_name">info_transition_name</string>
     <string name="name_transition_name">name_transition_name</string>
+    <string name="bottom_navigation_nearby">Nearby</string>
+    <string name="bottom_navigation_favorites">Favorites</string>
+    <string name="bottom_navigation_shelters">Shelters</string>
+    <string name="widget_title">Petfinder</string>
+    <string name="menu_item_favorite">favorite</string>
+    <string name="search_empty_message">No result from search!</string>
+    <string name="search_failed_message">Place selection failed: %s</string>
+    <string name="search_country">US</string>
 
     <!-- - - - - - - - - - - - - - - -
       - Used by SearchFilterPreferences  -
@@ -79,5 +87,9 @@
     <string name="cd_delete_recent_search">delete recent search</string>
     <string name="cd_search_setting">search setting</string>
     <string name="cd_navigate_up">navigate up</string>
+    <string name="cd_pet_image">pet image</string>
+    <string name="cd_recent_search_icon">recent search history</string>
+    <string name="cd_email_shelter">email shelter</string>
+    <string name="cd_favorite_fab">favorite</string>
 
 </resources>

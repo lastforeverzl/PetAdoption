@@ -25,7 +25,6 @@ public class WidgetUpdateJobService extends JobService {
         @Override
         public void onReceive(Context context, Intent intent) {
             Timber.tag("FirebaseJob").d("broadcast received");
-//            context.unregisterReceiver(this); //Unregister receiver to avoid receiver leaks exception
             LocalBroadcastManager.getInstance(context).unregisterReceiver(updateFinishedReceiver);
             onJobFinished();
         }

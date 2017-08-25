@@ -86,7 +86,7 @@ public abstract class BasePresenterFragment<P extends MvpContract.MvpPresenter<V
     protected abstract PresenterFactory<P> getPresenterFactory();
 
     /**
-     * Hook for subclasses that deliver the {@link Presenter} before its View is attached.
+     * Hook for subclasses that deliver the {@link com.zackyzhang.petadoption.ui.base.MvpContract.MvpPresenter} before its View is attached.
      * Can be use to initialize the Presenter or simple hold a reference to it.
      */
     protected abstract void onPresenterCreatedOrRestored(@NonNull P presenter);

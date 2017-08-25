@@ -112,7 +112,7 @@ public class SearchActivity extends BasePresenterActivity<SearchPresenter, Searc
     @Override
     public void onPlaceSelected(Place place) {
         if (place == null || place.getLatLng() == null) {
-            Toast.makeText(this, "no result from search!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.search_empty_message), Toast.LENGTH_SHORT).show();
         }
         Timber.tag(TAG).d(String.valueOf(place.getAddress()));
         mZipCode = ApiUtils.getZipCodeFromAddress(String.valueOf(place.getAddress()));
@@ -124,7 +124,7 @@ public class SearchActivity extends BasePresenterActivity<SearchPresenter, Searc
     @Override
     public void onError(Status status) {
         Timber.tag(TAG).d("onError: Status = " + status.toString());
-        Toast.makeText(this, "Place selection failed: " + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.search_failed_message, status.getStatusMessage()), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -182,7 +182,7 @@ public class SearchActivity extends BasePresenterActivity<SearchPresenter, Searc
         });
         placeAutocompleteFragment.setHint(getString(R.string.auto_complete_hint));
         AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                .setCountry("US")
+                .setCountry(getString(R.string.search_country))
                 .build();
         placeAutocompleteFragment.setFilter(typeFilter);
         placeAutocompleteFragment.setOnPlaceSelectedListener(this);

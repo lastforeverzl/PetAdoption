@@ -7,7 +7,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.zackyzhang.petadoption.ApiUtils;
 import com.zackyzhang.petadoption.Constants;
@@ -115,7 +114,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter, LoaderMana
             mPetList.add(pet);
             data.moveToNext();
         }
-        Log.d(TAG, "cursor finished");
+        Timber.tag(TAG).d("cursor finished");
         if (mView != null) {
             mView.loadData(mPetList);
         }
@@ -123,7 +122,7 @@ public class FavoritePresenter implements FavoriteContract.Presenter, LoaderMana
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Log.d(TAG, "in onLoaderReset");
+        Timber.tag(TAG).d("in onLoaderReset");
     }
 
 }

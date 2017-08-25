@@ -68,12 +68,11 @@ public class RecentQuery {
         }
         if (obj instanceof RecentQuery) {
             RecentQuery t = (RecentQuery) obj;
-            boolean result = this.getAddress().equals(t.getAddress()) &&
+            return this.getAddress().equals(t.getAddress()) &&
                     this.getAnimalType().equals(t.getAnimalType()) &&
                     this.getAnimalAge().equals(t.getAnimalAge()) &&
                     this.getAnimalSex().equals(t.getAnimalSex()) &&
                     this.getAnimalSize().equals(t.getAnimalSize());
-            return result;
         }
         return false;
     }

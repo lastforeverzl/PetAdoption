@@ -70,8 +70,7 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
     private ShelterContactListener mShelterContactListener;
 
     public static SheltersFragment newInstance() {
-        SheltersFragment fragment = new SheltersFragment();
-        return fragment;
+        return new SheltersFragment();
     }
 
     @Override
@@ -126,7 +125,6 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Timber.tag(TAG).d("onRequestPermissionsResult");
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

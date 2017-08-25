@@ -156,11 +156,6 @@ public class FavoritePetService extends IntentService {
                     contentValues.put(FavoriteDataContract.FavoriteEntry.COLUMN_PET_DATE, newLastUpdate);
                     getContentResolver().update(uri, contentValues, null, null);
                 } else {
-                    Uri uri = FavoriteDataContract.FavoriteEntry.buildPetUri(Long.valueOf(petId));
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put(FavoriteDataContract.FavoriteEntry.COLUMN_PET_STATUS, "P");
-                    contentValues.put(FavoriteDataContract.FavoriteEntry.COLUMN_PET_DATE, "2077-07-17T21:07:26Z");
-                    getContentResolver().update(uri, contentValues, null, null);
                     Timber.tag("FirebaseJob").d("status or update is not change");
                 }
             }

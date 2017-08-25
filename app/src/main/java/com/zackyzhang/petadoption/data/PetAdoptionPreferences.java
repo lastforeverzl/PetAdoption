@@ -103,8 +103,7 @@ public class PetAdoptionPreferences {
         String json = sharedPrefs.getString(RESENT_QUERY, "");
         Gson gson = new Gson();
         Type type = new TypeToken<LinkedList<RecentQuery>>(){}.getType();
-        LinkedList<RecentQuery> queryList = gson.fromJson(json, type);
-        return queryList;
+        return gson.fromJson(json, type);
     }
 
     public void clearRecentQueryList() {

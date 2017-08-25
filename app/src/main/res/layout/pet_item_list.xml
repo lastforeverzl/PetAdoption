@@ -10,7 +10,8 @@
         android:id="@+id/animal_photo"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/cd_pet_image"/>
 
     <LinearLayout
         android:layout_width="match_parent"

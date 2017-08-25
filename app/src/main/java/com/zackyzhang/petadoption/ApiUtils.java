@@ -31,7 +31,7 @@ public class ApiUtils {
     private static final String ZIPCODE_PATTERN = "\\d{5}";
 
     public static String cleanInvalidSymbol(String json) {
-        String newJson = json
+        return json
                 .replace("$t", "value")
                 .replace("@encoding", "encoding")
                 .replace("@version", "version")
@@ -39,7 +39,6 @@ public class ApiUtils {
                 .replace("@id", "id")
                 .replace("@xmlns:xsi", "xmls_xsi")
                 .replace("@xsi:noNamespaceSchemaLocation", "xsi_noNamespaceSchemaLocation");
-        return newJson;
     }
 
     public static String fixBreedObject(String json) {
@@ -208,8 +207,7 @@ public class ApiUtils {
     }
 
     public static String getZipCodeFromAddress(String address) {
-        String pattern = ZIPCODE_PATTERN;
-        Pattern r = Pattern.compile(pattern);
+        Pattern r = Pattern.compile(ZIPCODE_PATTERN);
         Matcher m = r.matcher(address);
         if (m.find()) {
             return m.group();

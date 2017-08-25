@@ -85,7 +85,8 @@
             android:id="@+id/im_shelter_call"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:srcCompat="@drawable/ic_local_phone_24dp"/>
+            app:srcCompat="@drawable/ic_local_phone_24dp"
+            android:contentDescription="@string/cd_call_shelter"/>
 
         <TextView
             android:id="@+id/tv_shelter_call"

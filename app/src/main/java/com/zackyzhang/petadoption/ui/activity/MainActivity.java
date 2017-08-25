@@ -261,12 +261,6 @@ public class MainActivity extends AppCompatActivity
             Timber.tag(TAG).d("current fragment: FavoriteFragment");
 
         }
-//        if (viewPagerFragment != null) {
-//            viewPagerFragment.googleClientConnected(this);
-//        }
-//        if (mSheltersFragment != null) {
-//            mSheltersFragment.googleClientConnected();
-//        }
     }
 
     @Override
