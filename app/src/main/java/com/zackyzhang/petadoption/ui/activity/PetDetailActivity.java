@@ -160,7 +160,8 @@ public class PetDetailActivity extends BasePresenterActivity<PetDetailPresenter,
     @Override
     public void loadData(ShelterBean shelter) {
         this.mShelter = shelter;
-        setupShelterInfo();
+        if (shelter != null)
+            setupShelterInfo();
     }
 
     @Override

@@ -26,6 +26,20 @@ public class ShelterFindResponse extends BaseResponse {
         private LastOffsetBean lastOffset;
         @SerializedName("shelters")
         private SheltersBean shelters;
+        @SerializedName("header")
+        private HeaderBean header;
+
+        public HeaderBean getHeader() {
+            return header;
+        }
+
+        public String getResponseCode() {
+            return getHeader().getStatus();
+        }
+
+        public void setHeader(HeaderBean header) {
+            this.header = header;
+        }
 
         public String getLastOffset() {
             return lastOffset.getValue();

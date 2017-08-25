@@ -79,6 +79,11 @@ public class SearchPresenter implements SearchContract.Presenter {
                 Timber.tag(TAG).d(" pets size after addAll: " + petsData.size());
                 mView.loadData(petsData);
             }
+
+            @Override
+            public void noDataReturned() {
+                mView.loadData(null);
+            }
         };
         Map<String, String> options;
         if (mZipCode != null) {

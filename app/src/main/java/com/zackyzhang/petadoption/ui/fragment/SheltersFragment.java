@@ -153,7 +153,7 @@ public class SheltersFragment extends BasePresenterFragment<SheltersPresenter, S
         Timber.tag(TAG).d("currentLatLng: " + currentLatLng[0] + currentLatLng[1]);
         mZipCode = getZipCode(currentLatLng);
         presenter.setZipCode(mZipCode);
-//        presenter.setZipCode("94568"); // for test on emulator
+//        presenter.setZipCode("100045"); // for test on emulator
     }
 
     private String getZipCode(double[] latLng) {

@@ -65,6 +65,12 @@ public class TabPresenter implements TabContract.Presenter {
                     if (mView != null)
                         mView.loadData(petsData);
                 }
+
+                @Override
+                public void noDataReturned() {
+                    if (mView != null)
+                        mView.loadData(null);
+                }
             };
             Map<String, String> options = new HashMap<>();
             if (mZipCode != null) {

@@ -53,6 +53,11 @@ public class PetDetailPresenter implements PetDetailContract.Presenter {
                 Timber.tag(TAG).d(data.getPetfinder().getShelter().getName());
                 mView.loadData(data.getPetfinder().getShelter());
             }
+
+            @Override
+            public void noDataReturned() {
+                mView.loadData(null);
+            }
         };
         mDataManager.getShelterById(id);
     }

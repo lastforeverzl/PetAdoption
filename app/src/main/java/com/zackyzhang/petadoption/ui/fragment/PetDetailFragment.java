@@ -133,7 +133,8 @@ public class PetDetailFragment extends BasePresenterFragment<PetDetailPresenter,
     public void loadData(ShelterBean shelter) {
         this.mShelter = shelter;
         Timber.tag(TAG).d(mShelter.getName());
-        setupShelterInfo();
+        if (shelter != null)
+            setupShelterInfo();
     }
 
     @Override

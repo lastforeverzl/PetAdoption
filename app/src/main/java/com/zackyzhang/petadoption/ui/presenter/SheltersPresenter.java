@@ -71,6 +71,13 @@ public class SheltersPresenter implements SheltersContract.Presenter {
                     if (mView != null)
                         mView.loadData(sheltersData);
                 }
+
+                @Override
+                public void noDataReturned() {
+                    if (mView != null) {
+                        mView.loadData(null);
+                    }
+                }
             };
             Map<String, String> options = new HashMap<>();
             if (mZipCode != null) {

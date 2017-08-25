@@ -30,13 +30,19 @@ public abstract class DataManager<T extends BaseResponse> {
 
     public abstract void onDataLoaded(T data);
 
+    public abstract void noDataReturned();
+
     public void loadFindPets(String location, Map<String, String> options) {
         Call<PetFindResponse> findPets = mPetFinderApi.getApi().petFind(BuildConfig.PETFINDER_API_KEY, location, options);
         findPets.enqueue(new Callback<PetFindResponse>() {
             @Override
             public void onResponse(Call<PetFindResponse> call, Response<PetFindResponse> response) {
                 if (response.isSuccessful()) {
-                    onDataLoaded((T) response.body());
+                    if (response.body().getPetfinder().getResponseCode().equals("100")) {
+                        onDataLoaded((T) response.body());
+                    } else {
+                        noDataReturned();
+                    }
                 }
             }
 
@@ -53,7 +59,11 @@ public abstract class DataManager<T extends BaseResponse> {
             @Override
             public void onResponse(Call<ShelterGetResponse> call, Response<ShelterGetResponse> response) {
                 if (response.isSuccessful()) {
-                    onDataLoaded((T)response.body());
+                    if (response.body().getPetfinder().getResponseCode().equals("100")) {
+                        onDataLoaded((T) response.body());
+                    } else {
+                        noDataReturned();
+                    }
                 }
             }
 
@@ -70,7 +80,11 @@ public abstract class DataManager<T extends BaseResponse> {
             @Override
             public void onResponse(Call<ShelterFindResponse> call, Response<ShelterFindResponse> response) {
                 if (response.isSuccessful()) {
-                    onDataLoaded((T) response.body());
+                    if (response.body().getPetfinder().getResponseCode().equals("100")) {
+                        onDataLoaded((T) response.body());
+                    } else {
+                        noDataReturned();
+                    }
                 }
             }
 
@@ -87,7 +101,11 @@ public abstract class DataManager<T extends BaseResponse> {
             @Override
             public void onResponse(Call<PetFindResponse> call, Response<PetFindResponse> response) {
                 if (response.isSuccessful()) {
-                    onDataLoaded((T) response.body());
+                    if (response.body().getPetfinder().getResponseCode().equals("100")) {
+                        onDataLoaded((T) response.body());
+                    } else {
+                        noDataReturned();
+                    }
                 }
             }
 

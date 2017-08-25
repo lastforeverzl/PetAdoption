@@ -129,6 +129,11 @@ public class FavoritePetService extends IntentService {
         DataManager dataManager = new DataManager<PetGetResponse>() {
             @Override
             public void onDataLoaded(PetGetResponse data) {}
+
+            @Override
+            public void noDataReturned() {
+
+            }
         };
         Uri petsQueryUri = FavoriteDataContract.FavoriteEntry.CONTENT_URI;
         Cursor cursor = getContentResolver().query(

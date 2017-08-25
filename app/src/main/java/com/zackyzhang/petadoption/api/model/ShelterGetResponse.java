@@ -22,6 +22,20 @@ public class ShelterGetResponse extends BaseResponse{
     public static class PetfinderBean {
         @SerializedName("shelter")
         private ShelterBean shelter;
+        @SerializedName("header")
+        private HeaderBean header;
+
+        public HeaderBean getHeader() {
+            return header;
+        }
+
+        public String getResponseCode() {
+            return getHeader().getStatus();
+        }
+
+        public void setHeader(HeaderBean header) {
+            this.header = header;
+        }
 
         public ShelterBean getShelter() {
             return shelter;

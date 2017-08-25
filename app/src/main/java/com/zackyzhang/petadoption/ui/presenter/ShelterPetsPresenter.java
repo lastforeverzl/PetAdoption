@@ -61,6 +61,11 @@ public class ShelterPetsPresenter implements ShelterPetsContract.Presenter {
                         mView.loadData(null);
                     }
                 }
+
+                @Override
+                public void noDataReturned() {
+                    mView.loadData(null);
+                }
             };
             Map<String, String> options = new HashMap<>();
             Timber.tag(TAG).d(mId);
