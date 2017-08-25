@@ -39,5 +39,5 @@ obj/
 app/libs/
 app/src/main/res/playstore/
 #gradle.properties
-app/key_release.jks
+#app/key_release.jks
 #keystore.properties
